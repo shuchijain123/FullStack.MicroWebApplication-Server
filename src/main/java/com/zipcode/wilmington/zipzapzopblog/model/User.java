@@ -1,18 +1,19 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import com.zipcode.wilmington.zipzapzopblog.model.Post;
-
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Collection;
 @Entity
 public class User {
+
+    @Id
     private Long id;
     private String email;
     private String password;
     private String username;
     private String name;
     private String lastName;
-    private int active;
+//    private int active;
     private Collection<Post> posts;
 
     public Long getId() {
@@ -63,13 +64,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
+//    public int getActive() {
+//        return active;
+//    }
+//
+//    public void setActive(int active) {
+//        this.active = active;
+//    }
 
     public Collection<Post> getPosts() {
         return posts;
