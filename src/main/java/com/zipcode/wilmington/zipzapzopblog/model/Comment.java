@@ -1,6 +1,7 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import com.vdurmont.emoji.Emoji;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -20,14 +21,23 @@ public class Comment {
     @Column(name = "create_date", nullable = false, updatable = false)
     @CreationTimestamp
     private Date creationDate;
+    @ManyToOne
 
-    @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = false)
-    @NotNull
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = true)
+    //@NotNull
+    private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    @NotNull
-    private Post post;
+
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
+    //@NotNull
+    private User user;
+
+
+    public Comment() {
+
+    }
+
 
 
 
@@ -61,5 +71,13 @@ public class Comment {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
