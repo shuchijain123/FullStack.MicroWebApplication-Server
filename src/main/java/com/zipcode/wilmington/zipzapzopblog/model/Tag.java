@@ -1,9 +1,6 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -13,7 +10,9 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String keyWord;
-   // private Collection<Post> posts;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    private Collection<Post> posts;
 
     public Long getId() {
         return id;
