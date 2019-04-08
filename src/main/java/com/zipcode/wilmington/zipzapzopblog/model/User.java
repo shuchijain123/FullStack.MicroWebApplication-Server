@@ -1,10 +1,12 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -18,7 +20,9 @@ public class User {
     private String name;
     private String lastName;
 //    private int active;
-    private Collection<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
 
     public Long getId() {
         return id;
@@ -76,11 +80,11 @@ public class User {
 //        this.active = active;
 //    }
 
-    public Collection<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(Collection<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 }

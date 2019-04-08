@@ -1,7 +1,9 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -21,16 +23,14 @@ public class Comment {
     @Column(name = "create_date", nullable = false, updatable = false)
     @CreationTimestamp
     private Date creationDate;
-    @ManyToOne
 
-    @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = true)
-    //@NotNull
+    @ManyToOne
+    @NotNull
+    @JsonBackReference(value = "post comments")
     private Post post;
 
     @ManyToOne
-
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
-    //@NotNull
+    @JsonBackReference(value = "user comments")
     private User user;
 
 
@@ -65,19 +65,19 @@ public class Comment {
         this.creationDate = creationDate;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public Post getPost() {
+//        return post;
+//    }
+//
+//    public void setPost(Post post) {
+//        this.post = post;
+//    }
+//
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }
