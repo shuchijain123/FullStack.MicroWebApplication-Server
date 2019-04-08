@@ -25,3 +25,7 @@ nbdist/
 
 ### OSX Files ###
 .DS_Store
+
+target/
+.idea/
+zipzapzopblog.iml
