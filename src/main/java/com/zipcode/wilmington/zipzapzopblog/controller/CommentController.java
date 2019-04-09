@@ -7,6 +7,7 @@ import com.zipcode.wilmington.zipzapzopblog.service.CommentService;
 import com.zipcode.wilmington.zipzapzopblog.service.PostService;
 import com.zipcode.wilmington.zipzapzopblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
+@RestController
 public class CommentController {
 
     private CommentService commentService;
@@ -30,10 +32,6 @@ public class CommentController {
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
-
-
-
-
 
 
 
@@ -51,11 +49,12 @@ public class CommentController {
     public ResponseEntity<Comment> createCommentonPost(@RequestBody Comment comment, @PathVariable Long id){
 
         Optional<Post> post = postservice.findForId(id);
-        Comment newComment=commentService.createComment(comment);
+        comment.setPost(post.get());
+       commentService.createComment(comment);
 
-        newComment.setPost(post.get());
 
-        return new ResponseEntity<>(newComment, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(comment, HttpStatus.CREATED);
 
 
     }
@@ -87,7 +86,9 @@ public class CommentController {
 
 
     @GetMapping("/commentsByDate/{date}")
-    public ResponseEntity<List<Comment>> getAllCommentsByDate(@PathVariable Date date) {
+    public ResponseEntity<List<Comment>> getAllCommentsByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+
+
 
         return new ResponseEntity<List<Comment>>(commentService.findCommentbyCreationDate(date), HttpStatus.OK);
 
@@ -134,7 +135,7 @@ public class CommentController {
 
             if (user.isPresent()) {
                 Comment comment = new Comment();
-                comment.setUser(user.get());
+                //comment.setUser(user.get());
                 comment.setPost(post.get());
 
                 model.addAttribute("comment", comment);
