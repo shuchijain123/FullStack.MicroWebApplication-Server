@@ -63,7 +63,7 @@ public class CommentController {
 
         } else {
             commentService.createComment(comment);
-            return "redirect:/post/";
+            return "redirect:/post/" + comment.getPost().getId();
         }
     }
 }
