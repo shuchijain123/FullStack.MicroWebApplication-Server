@@ -24,7 +24,7 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    
+
     @PostMapping("/tags")
     public ResponseEntity<Tag> createTag(@RequestBody Tag tag){
         return new ResponseEntity<>(tagService.createTag(tag), HttpStatus.OK);
@@ -60,5 +60,7 @@ public class TagController {
         tagService.delete(id);
         return new ResponseEntity(true, HttpStatus.OK);
     }
+
+
 
 }
