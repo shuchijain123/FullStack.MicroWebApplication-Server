@@ -1,18 +1,32 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import com.zipcode.wilmington.zipzapzopblog.model.Post;
-
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Collection;
+
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
+
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "last_name")
     private String lastName;
-    private int active;
+
+    @OneToMany(mappedBy = "user")
     private Collection<Post> posts;
 
     public Long getId() {
@@ -61,14 +75,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
     }
 
     public Collection<Post> getPosts() {
