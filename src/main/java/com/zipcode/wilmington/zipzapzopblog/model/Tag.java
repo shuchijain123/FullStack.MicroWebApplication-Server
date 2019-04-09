@@ -11,10 +11,24 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tag_id", unique = true, nullable = false)
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String keyWord;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tags")
     private Collection<Post> posts;
+
+    public Tag(){
+    }
+
+    public Tag(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public Tag(String keyWord, Collection<Post> posts) {
+        this.keyWord = keyWord;
+        this.posts = posts;
+    }
 
     public Long getId() {
         return id;
@@ -37,10 +51,9 @@ public class Tag {
     }
 
     public void setPosts(Collection<Post> posts) {
-        this.posts = posts;
+        if(posts!=null){
+            this.posts = posts;
+        }
     }
-
-
-
 
 }
