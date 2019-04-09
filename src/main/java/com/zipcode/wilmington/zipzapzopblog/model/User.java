@@ -1,28 +1,33 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
-    private String email;
-    private String password;
-    private String username;
-    private String name;
-    private String lastName;
-//    private int active;
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts;
 
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @OneToMany(mappedBy = "user")
+    private Collection<Post> posts;
 
     public Long getId() {
         return id;
@@ -72,19 +77,11 @@ public class User {
         this.lastName = lastName;
     }
 
-//    public int getActive() {
-//        return active;
-//    }
-//
-//    public void setActive(int active) {
-//        this.active = active;
-//    }
-
-    public List<Post> getPosts() {
+    public Collection<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(Collection<Post> posts) {
         this.posts = posts;
     }
 }
