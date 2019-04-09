@@ -16,6 +16,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "post_id")
     private Long id;
 
     @Column(name = "title", nullable = false)
@@ -38,6 +39,10 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private Collection<Comment> comments;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Collection<Tag> tags;
 
     public Long getId() {
         return id;
