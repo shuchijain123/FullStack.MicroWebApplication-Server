@@ -1,9 +1,5 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "post")
@@ -38,8 +33,7 @@ public class Post {
     private Date createDate;
 
     @ManyToOne
-    @NotNull
-    @JsonBackReference(value = "user posts")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
