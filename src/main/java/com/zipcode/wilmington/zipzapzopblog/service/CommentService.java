@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class CommentService {
 
 
     public Comment createComment(Comment comment) {
-        this.comments.add(comment);
+        //this.comments.add(comment);
         return commrepository.saveAndFlush(comment);
     }
 
@@ -47,6 +48,25 @@ public class CommentService {
     }
 
 
+    public Comment putpostAndUser(Long id, Comment comment) {
+
+        Comment comm = new Comment();
+        Long post_id=  comment.getPost().getId();
+        Long user_id=  comment.getUser().getId();
+        Comment originalcomment = commrepository.findById(id).get();
+        originalcomment.setPost(comment.getPost());
+        originalcomment.setUser(comment.getUser());
+        return commrepository.save(originalcomment);
+    }
+
+
+
+
+
+
+
+
+
     public Comment show(Long id) {
 
 
@@ -57,7 +77,25 @@ public class CommentService {
 
     {
         return commrepository.findAll();
+
+
     }
+
+
+    public List<Comment>findCommentbyPostId(Long id) {
+
+
+        return commrepository.findCommentsByPostId(id);
+    }
+
+
+    public List<Comment>findCommentbyCreationDate(Date date) {
+
+
+        return commrepository.findCommentsByCreationDate(date);
+    }
+
+
 
 
 

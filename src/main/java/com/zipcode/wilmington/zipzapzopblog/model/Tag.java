@@ -1,6 +1,7 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -9,25 +10,27 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "tag_id", unique = true, nullable = false)
+    @Column(name = "tag_id", unique = false, nullable = false)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "key_word",unique = false, nullable = false)
     private String keyWord;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tags")
     private Collection<Post> posts;
 
     public Tag(){
+       this("");
     }
 
     public Tag(String keyWord) {
         this.keyWord = keyWord;
+        this.posts = new ArrayList<>();
     }
 
-    public Tag(String keyWord, Collection<Post> posts) {
+    public Tag(String keyWord, Long postId ) {
         this.keyWord = keyWord;
-        this.posts = posts;
+        this.posts = new ArrayList<>();
     }
 
     public Long getId() {
