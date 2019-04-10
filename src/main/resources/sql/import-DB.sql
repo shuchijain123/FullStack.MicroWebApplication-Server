@@ -8,7 +8,7 @@ INSERT INTO USER (user_id, password, email, username, name, last_name)
 VALUES (3, '$2a$06$OAPObzhRdRXBCbk7Hj/ot.jY3zPwR8n7/mfLtKIgTzdJa4.6TwsIm', 'ana@mail.com', 'ana', 'Ana', 'Surname');
 
 
-INSERT INTO POST (post_id, title, body, create_date,user_id)
+INSERT INTO POST (post_id, title, body, create_date, user_id)
 VALUES (1, 'abcblog', 'gdgdgdfg I am very good', '2019-04-09',1);
 
 
