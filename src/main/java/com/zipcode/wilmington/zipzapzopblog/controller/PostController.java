@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class PostController {
 
     private final PostService service;
@@ -24,7 +24,7 @@ public class PostController {
 
     @GetMapping(value = "/posts/{id}")
     public ResponseEntity<Post> show(@PathVariable Long id){
-       return new ResponseEntity<>(service.show(id), HttpStatus.OK);
+       return new ResponseEntity<>(service.show(id).get(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/posts")

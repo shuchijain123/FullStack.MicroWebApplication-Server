@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -19,7 +20,7 @@ public class PostService {
     @Autowired
     public PostService(PostRepo postRepo){this.postRepo = postRepo;}
 
-    public Post show(Long id) { return postRepo.findById(id).get();}
+    public Optional<Post> show(Long id) { return postRepo.findById(id);}
 
     public Post create(Post post){ return postRepo.save(post); }
 
