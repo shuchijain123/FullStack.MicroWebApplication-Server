@@ -17,7 +17,7 @@ public class Comment {
     @Column(name = "body", columnDefinition = "TEXT")
     @NotEmpty(message = "*Please write something")
     private String body;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "create_date", nullable = false, updatable = false)
     @CreationTimestamp
     private Date creationDate;
