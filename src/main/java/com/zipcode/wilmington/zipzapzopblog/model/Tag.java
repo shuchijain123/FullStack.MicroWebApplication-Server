@@ -10,10 +10,10 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "tag_id", unique = true, nullable = false)
+    @Column(name = "tag_id", unique = false, nullable = false)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "key_word",unique = false, nullable = false)
     private String keyWord;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tags")
