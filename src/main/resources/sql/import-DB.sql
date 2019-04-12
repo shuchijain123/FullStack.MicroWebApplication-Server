@@ -1,4 +1,4 @@
-INSERT INTO ZIPZAPZOP.USER (user_id, password, email, username, name, last_name)
+INSERT INTO USER (user_id, password, email, username, name, last_name)
 VALUES (1, '$2a$06$OAPObzhRdRXBCbk7Hj/ot.jY3zPwR8n7/mfLtKIgTzdJa4.6TwsIm', 'user@mail.com', 'mbrahma', 'Marci', 'Brahma');
 
 INSERT INTO USER (user_id, password, email, username, name, last_name)
