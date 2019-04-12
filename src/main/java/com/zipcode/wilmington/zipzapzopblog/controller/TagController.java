@@ -4,6 +4,7 @@ import com.zipcode.wilmington.zipzapzopblog.model.Post;
 import com.zipcode.wilmington.zipzapzopblog.model.Tag;
 import com.zipcode.wilmington.zipzapzopblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,19 +42,11 @@ public class TagController {
     }
 
     @PutMapping("/tags/{id}")
-    public ResponseEntity<Tag> updateTag(@PathVariable Long id, @PathVariable Long postId){
-
-        Optional<Post> post = tagService.findPost(postId);
-        Tag tag = tagService.getTag(id);
-
-        Collection<Post> posts = new ArrayList<>();
-
-        if(post.isPresent()){
-           posts.add(post.get());
-           tag.setPosts(posts);
-        }
-        return new ResponseEntity<>(tagService.update(tag),HttpStatus.OK);
+    public ResponseEntity<Tag> updateTag(@PathVariable Long id, @RequestBody Tag tag){
+        return null;
     }
+
+
 
     @DeleteMapping("/tags/{id}")
     public ResponseEntity<Boolean> deleteTag(@PathVariable Long id){

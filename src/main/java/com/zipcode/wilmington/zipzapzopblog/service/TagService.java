@@ -47,6 +47,9 @@ public class TagService {
     }
 
     public Tag update(Tag tag){
-        return tagRepo.save(tag);
+        Tag original = tagRepo.findById(tag.getId()).get();
+        original.setKeyWord(tag.getKeyWord());
+        original.setPosts(tag.getPosts());
+        return tagRepo.save(original);
     }
 }
