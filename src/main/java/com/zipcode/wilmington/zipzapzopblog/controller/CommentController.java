@@ -47,16 +47,34 @@ public class CommentController {
 
 //Comment the Post by Post Id
 
-    @GetMapping ("/commentMyPost/{id}")
-    public ResponseEntity<Comment> createCommentonPost(@RequestBody Comment comment, @PathVariable Long id){
+    @PostMapping ("/commentMyPost/{id}")
+    public String createCommentonPost(@RequestBody Comment comment, @PathVariable Long id,Principal principal) {
 
         Optional<Post> post = postservice.show(id);
+
         comment.setPost(post.get());
-       commentService.createComment(comment);
 
 
+        if (post.isPresent()) {
+            Optional<User> user = Optional.ofNullable(post.get().getUser());;
 
-        return new ResponseEntity<>(comment, HttpStatus.CREATED);
+
+            if (user.isPresent()) {
+
+                comment.setPost(post.get());
+                comment.setUser(user.get());
+
+                commentService.createComment(comment);
+
+                return "redirect:/post/" + comment.getPost().getId();
+            } else {
+                return "/error";
+            }
+
+        } else {
+            return "/error";
+        }
+
 
 
     }

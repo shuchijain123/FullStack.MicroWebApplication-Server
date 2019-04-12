@@ -32,6 +32,14 @@ public class UserService {
         return true;
     }
 
+    public User update(User user){
+        User originalUser = userRepo.findById(user.getId()).get();
+        originalUser.setEmail(user.getEmail());
+        originalUser.setName(user.getName());
+        originalUser.setLastName(user.getLastName());
+        return userRepo.save(originalUser);
+    }
+
     public Optional<User> findByUsername(String username){
         return userRepo.findByUsername(username);
     }
