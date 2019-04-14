@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,10 +19,22 @@ public class PostTagController {
     @Autowired
     TagService tagService;
 
-//    @GetMapping("/posts/{id}/tags")
-//    public ResponseEntity<List<>>
-//
-//    @GetMapping("/tags/{id}/posts")
+    @GetMapping("/posts/{id}/tags")
+    public ResponseEntity<Collection<Tag>> getAllTagsOnPost(@PathVariable Long postId){
+        Optional<Post> post = tagService.findPost(postId);
+        Collection<Tag> tagsOnPost = new ArrayList<>();
+        tagsOnPost = post.get().getTags();
+
+        return new ResponseEntity<>(tagsOnPost, HttpStatus.OK);
+    }
+
+    @GetMapping("/tags/{id}/posts")
+    public ResponseEntity<Collection<Post>> getAllPostsByTag(@PathVariable Long tagId){
+        Tag tag = tagService.getTag(tagId);
+        Collection<Post> posts = tag.getPosts();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
 
     @PostMapping("/posts/{postId}/tags/{tagId}")
     public ResponseEntity<Boolean> updatePostTag(@PathVariable Long postId, @PathVariable Long tagId) {

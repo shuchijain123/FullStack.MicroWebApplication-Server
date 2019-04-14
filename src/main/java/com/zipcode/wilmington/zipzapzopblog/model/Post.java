@@ -83,6 +83,10 @@ public class Post {
         this.user = user;
     }
 
+    public Collection<Tag> getTags() {
+        return tags;
+    }
+
 //    public List<Comment> getComments() {
 //        return comments;
 //    }
