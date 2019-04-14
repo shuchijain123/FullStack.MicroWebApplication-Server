@@ -3,7 +3,7 @@ package com.zipcode.wilmington.zipzapzopblog.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CommentTest {
+public class CommentModelTest {
     @Test
     public void CommentSetBodyTest() {
         //given

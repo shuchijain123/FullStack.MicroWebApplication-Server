@@ -15,7 +15,7 @@ public class Tag {
 
     @Column(name = "key_word",unique = false, nullable = false)
     private String keyWord;
-    
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "tags")
     private Collection<Post> posts;
 

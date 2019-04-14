@@ -38,8 +38,8 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+//    private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "post_tag",
@@ -71,12 +71,12 @@ public class Post {
         this.body = body;
     }
 
-    public Date getCretaeDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCretaeDate(Date cretaeDate) {
-        this.createDate = cretaeDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public User getUser() {
@@ -104,6 +104,7 @@ public class Post {
 //    }
 
 
+
     @Override
     public String toString() {
         return "Post{" +
@@ -112,8 +113,8 @@ public class Post {
                 ", body='" + body + '\'' +
                 ", createDate=" + createDate +
                 ", user=" + user +
-                ", comments=" + comments +
                 ", tags=" + tags +
                 '}';
     }
+
 }
