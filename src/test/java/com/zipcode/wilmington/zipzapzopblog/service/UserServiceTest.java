@@ -1,7 +1,7 @@
-package com.zipcode.wilmington.zipzapzopblog.model;
+package com.zipcode.wilmington.zipzapzopblog.service;
 
+import com.zipcode.wilmington.zipzapzopblog.model.User;
 import com.zipcode.wilmington.zipzapzopblog.repository.UserRepo;
-import com.zipcode.wilmington.zipzapzopblog.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-public class UserTest {
+public class UserServiceTest {
 
     @Test
     public void createTest(){
@@ -51,8 +51,9 @@ public class UserTest {
         // when actions
         when(userRepo.findById(1L)).thenReturn(Optional.of(userToReturn));
         // create class to test
-        User user = userRepo.findById(1L).get();
         UserService userService = new UserService(userRepo);
+        User user = userRepo.findById(1L).get();
+
 
         // call the method to test
         User actual = userService.update(user);
@@ -60,6 +61,13 @@ public class UserTest {
         // Make sure the method save got call with the person
         verify(userRepo).save(user);
     }
+
+    @Test
+    public void showTest(){
+
+    }
+
+
 
 
 

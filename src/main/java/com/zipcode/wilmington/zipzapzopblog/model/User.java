@@ -1,7 +1,6 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "user")
@@ -9,7 +8,7 @@ public class User {
 
     @Column(name = "user_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "email", unique = false, nullable = false)
@@ -21,8 +20,8 @@ public class User {
     @Column(name = "username", nullable = false, unique = false)
     private String username;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
@@ -34,11 +33,11 @@ public class User {
 
     }
 
-    public User(String email, String password, String username, String name, String lastName) {
+    public User(String email, String password, String username, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.username = username;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
     }
 
@@ -74,12 +73,12 @@ public class User {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
