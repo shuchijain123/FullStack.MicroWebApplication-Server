@@ -1,16 +1,15 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "user")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "email", unique = false, nullable = false)
     private String email;
@@ -21,14 +20,26 @@ public class User {
     @Column(name = "username", nullable = false, unique = false)
     private String username;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
+//
+//    @OneToMany(mappedBy = "user")
+//    private Collection<Post> posts;
 
-    @OneToMany(mappedBy = "user")
-    private Collection<Post> posts;
+    public User() {
+
+    }
+
+    public User(String email, String password, String username, String firstName, String lastName) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public Long getId() {
         return id;
@@ -62,12 +73,12 @@ public class User {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -78,11 +89,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Collection<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Collection<Post> posts) {
-        this.posts = posts;
-    }
+//    public Collection<Post> getPosts() {
+//        return posts;
+//    }
+//
+//    public void setPosts(Collection<Post> posts) {
+//        this.posts = posts;
+//    }
 }

@@ -16,6 +16,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class TagController {
 
     private final TagService tagService;
@@ -45,8 +46,6 @@ public class TagController {
     public ResponseEntity<Tag> updateTag(@PathVariable Long id, @RequestBody Tag tag){
         return null;
     }
-
-
 
     @DeleteMapping("/tags/{id}")
     public ResponseEntity<Boolean> deleteTag(@PathVariable Long id){

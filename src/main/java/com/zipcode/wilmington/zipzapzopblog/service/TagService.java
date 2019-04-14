@@ -50,6 +50,8 @@ public class TagService {
         Tag original = tagRepo.findById(tag.getId()).get();
         original.setKeyWord(tag.getKeyWord());
         original.setPosts(tag.getPosts());
+        System.out.println(" after set posts");
+        System.out.println(" original " + original.toString());
         return tagRepo.save(original);
     }
 }
