@@ -1,11 +1,13 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +41,11 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Collection<Tag> tags;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "post_tag",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Collection<Tag> tags = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -83,6 +87,10 @@ public class Post {
         this.user = user;
     }
 
+    public void setTags(Collection<Tag> tags) {
+        this.tags = tags;
+    }
+    @JsonIgnore
     public Collection<Tag> getTags() {
         return tags;
     }
@@ -94,4 +102,18 @@ public class Post {
 //    public void setComments(List<Comment> comments) {
 //        this.comments = comments;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", createDate=" + createDate +
+                ", user=" + user +
+                ", comments=" + comments +
+                ", tags=" + tags +
+                '}';
+    }
 }

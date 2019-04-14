@@ -15,8 +15,8 @@ public class Tag {
 
     @Column(name = "key_word",unique = false, nullable = false)
     private String keyWord;
-
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "tags")
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "tags")
     private Collection<Post> posts;
 
     public Tag(){
@@ -59,4 +59,12 @@ public class Tag {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", keyWord='" + keyWord + '\'' +
+                ", posts=" + posts +
+                '}';
+    }
 }

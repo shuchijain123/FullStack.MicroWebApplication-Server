@@ -2,6 +2,7 @@ package com.zipcode.wilmington.zipzapzopblog.controller;
 
 import com.zipcode.wilmington.zipzapzopblog.model.Post;
 import com.zipcode.wilmington.zipzapzopblog.model.Tag;
+import com.zipcode.wilmington.zipzapzopblog.service.PostService;
 import com.zipcode.wilmington.zipzapzopblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,16 +20,18 @@ public class PostTagController {
     @Autowired
     TagService tagService;
 
-    @GetMapping("/posts/{id}/tags")
+    @Autowired
+    PostService postService;
+
+    @GetMapping("/posts/{postId}/tags")
     public ResponseEntity<Collection<Tag>> getAllTagsOnPost(@PathVariable Long postId){
         Optional<Post> post = tagService.findPost(postId);
-        Collection<Tag> tagsOnPost = new ArrayList<>();
-        tagsOnPost = post.get().getTags();
+        Collection<Tag> tagsOnPost = post.get().getTags();
 
         return new ResponseEntity<>(tagsOnPost, HttpStatus.OK);
     }
 
-    @GetMapping("/tags/{id}/posts")
+    @GetMapping("/tags/{tagId}/posts")
     public ResponseEntity<Collection<Post>> getAllPostsByTag(@PathVariable Long tagId){
         Tag tag = tagService.getTag(tagId);
         Collection<Post> posts = tag.getPosts();
@@ -38,18 +41,17 @@ public class PostTagController {
 
     @PostMapping("/posts/{postId}/tags/{tagId}")
     public ResponseEntity<Boolean> updatePostTag(@PathVariable Long postId, @PathVariable Long tagId) {
+
         Optional<Post> post = tagService.findPost(postId);
         Tag tag = tagService.getTag(tagId);
+        Collection<Tag> tags = new ArrayList<>();
 
-        Collection<Post> posts = new ArrayList<>();
-
-        if(post.isPresent()){
-            posts.add(post.get());
-            tag.setPosts(posts);
+        if (post.isPresent()) {
+            tags.add(tag);
+            tags.addAll(post.get().getTags());
+            post.get().setTags(tags);
         }
-        tagService.update(tag);
+        postService.update(post.get());
         return new ResponseEntity<>(true, HttpStatus.OK);
-
     }
-
 }
