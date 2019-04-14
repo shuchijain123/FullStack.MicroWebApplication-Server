@@ -36,8 +36,8 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+//    private List<Comment> comments;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "post_tag", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -67,12 +67,12 @@ public class Post {
         this.body = body;
     }
 
-    public Date getCretaeDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCretaeDate(Date cretaeDate) {
-        this.createDate = cretaeDate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public User getUser() {
@@ -90,4 +90,5 @@ public class Post {
 //    public void setComments(List<Comment> comments) {
 //        this.comments = comments;
 //    }
+
 }
