@@ -43,7 +43,6 @@ public class TagModelTest {
 
         //then
         Assert.assertEquals(posts, tag.getPosts());
-
     }
 
 
