@@ -142,10 +142,28 @@ public class TagServiceTest {
         // create class to test
         TagService tagService = new TagService(tagRepo,postRepo);
 
-
         // call the method to test
         Optional<Post> actual = tagService.findPost(111L);
 
         Assert.assertEquals(Optional.of(post), actual);
+    }
+    @Test
+    public void deleteTagTest(){
+        //given
+        Tag tagToReturn1 = new Tag("TEST TAG");
+        Long id1 = 3L;
+        tagToReturn1.setId(id1);
+
+        //mock
+        TagRepo tagRepo = mock(TagRepo.class);
+        PostRepo postRepo = mock(PostRepo.class);
+
+        // create class to test
+        TagService tagService = new TagService(tagRepo,postRepo);
+
+        // call the method to test
+        tagService.delete(id1);
+
+        verify(tagRepo).deleteById(id1);
     }
 }

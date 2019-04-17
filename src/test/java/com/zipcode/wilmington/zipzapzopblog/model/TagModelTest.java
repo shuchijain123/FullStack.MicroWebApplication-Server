@@ -63,7 +63,6 @@ public class TagModelTest {
         tag.setPosts(posts);
 
         //then
-        System.out.println(tag.toString());
         Assert.assertEquals(expected, tag.toString());
     }
 

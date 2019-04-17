@@ -17,11 +17,14 @@ import java.util.Optional;
 @RestController
 public class PostTagController {
 
-    @Autowired
-    TagService tagService;
+    private TagService tagService;
+
+    private PostService postService;
 
     @Autowired
-    PostService postService;
+    public PostTagController(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @GetMapping("/posts/{postId}/tags")
     public ResponseEntity<Collection<Tag>> getAllTagsOnPost(@PathVariable Long postId){
@@ -50,8 +53,10 @@ public class PostTagController {
             tags.add(tag);
             tags.addAll(post.get().getTags());
             post.get().setTags(tags);
+            postService.update(post.get());
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        postService.update(post.get());
-        return new ResponseEntity<>(true, HttpStatus.OK);
+
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 }
