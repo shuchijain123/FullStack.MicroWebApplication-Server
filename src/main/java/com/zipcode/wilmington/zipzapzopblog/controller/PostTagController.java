@@ -22,8 +22,9 @@ public class PostTagController {
     private PostService postService;
 
     @Autowired
-    public PostTagController(TagService tagService) {
+    public PostTagController(TagService tagService, PostService postService) {
         this.tagService = tagService;
+        this.postService = postService;
     }
 
     @GetMapping("/posts/{postId}/tags")
@@ -46,17 +47,22 @@ public class PostTagController {
     public ResponseEntity<Boolean> updatePostTag(@PathVariable Long postId, @PathVariable Long tagId) {
 
         Optional<Post> post = tagService.findPost(postId);
-        Tag tag = tagService.getTag(tagId);
-        Collection<Tag> tags = new ArrayList<>();
 
+        Tag tag = tagService.getTag(tagId);
+        System.out.println("gets here'");
+        Collection<Tag> tags = new ArrayList<>();
+        System.out.println("gets here'");
+
+        System.out.println(post.isPresent());
         if (post.isPresent()) {
+
             tags.add(tag);
             tags.addAll(post.get().getTags());
             post.get().setTags(tags);
             postService.update(post.get());
-            return new ResponseEntity<>(true, HttpStatus.OK);
+           return new ResponseEntity<>(true, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(false, HttpStatus.OK);
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 }
