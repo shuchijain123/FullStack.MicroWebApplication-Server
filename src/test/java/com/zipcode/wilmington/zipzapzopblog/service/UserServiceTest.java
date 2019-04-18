@@ -86,7 +86,20 @@ public class UserServiceTest {
 
     @Test
     public void deleteTest(){
+        //mock
+        Boolean expectedBool = true;
+        UserRepo userRepo = mock(UserRepo.class);
 
+        // create class to test
+        UserService userService = new UserService(userRepo);
+
+        // method call
+        Boolean actual = userService.delete(50L);
+        // verify
+        verify(userRepo, times(1)).deleteById(50L);
+
+        // boolean is returned
+        Assert.assertEquals(expectedBool,actual);
     }
 
     @Test
