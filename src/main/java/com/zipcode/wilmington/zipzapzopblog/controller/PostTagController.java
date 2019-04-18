@@ -49,11 +49,9 @@ public class PostTagController {
         Optional<Post> post = tagService.findPost(postId);
 
         Tag tag = tagService.getTag(tagId);
-        System.out.println("gets here'");
-        Collection<Tag> tags = new ArrayList<>();
-        System.out.println("gets here'");
 
-        System.out.println(post.isPresent());
+        Collection<Tag> tags = new ArrayList<>();
+
         if (post.isPresent()) {
 
             tags.add(tag);
