@@ -41,7 +41,7 @@ public class PostService {
         return postRepo.findByOrderByCreateDateDesc();
     }
 
-    private int subtractPageByOne(int page){
+    protected int subtractPageByOne(int page){
         return (page < 1) ? 0 : page - 1;
     }
 }

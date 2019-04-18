@@ -47,6 +47,13 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Collection<Tag> tags = new ArrayList<>();
 
+    public Post(String title, String body, Date createDate, User user){
+        this.title = title;
+        this.body = body;
+        this.createDate = createDate;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
