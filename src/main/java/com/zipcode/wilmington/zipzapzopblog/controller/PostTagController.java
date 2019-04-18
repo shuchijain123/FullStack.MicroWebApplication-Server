@@ -17,11 +17,15 @@ import java.util.Optional;
 @RestController
 public class PostTagController {
 
-    @Autowired
-    TagService tagService;
+    private TagService tagService;
+
+    private PostService postService;
 
     @Autowired
-    PostService postService;
+    public PostTagController(TagService tagService, PostService postService) {
+        this.tagService = tagService;
+        this.postService = postService;
+    }
 
     @GetMapping("/posts/{postId}/tags")
     public ResponseEntity<Collection<Tag>> getAllTagsOnPost(@PathVariable Long postId){
@@ -43,15 +47,20 @@ public class PostTagController {
     public ResponseEntity<Boolean> updatePostTag(@PathVariable Long postId, @PathVariable Long tagId) {
 
         Optional<Post> post = tagService.findPost(postId);
+
         Tag tag = tagService.getTag(tagId);
+
         Collection<Tag> tags = new ArrayList<>();
 
         if (post.isPresent()) {
+
             tags.add(tag);
             tags.addAll(post.get().getTags());
             post.get().setTags(tags);
+            postService.update(post.get());
+           return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        postService.update(post.get());
-        return new ResponseEntity<>(true, HttpStatus.OK);
+
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 }
