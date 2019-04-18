@@ -2,6 +2,7 @@ package com.zipcode.wilmington.zipzapzopblog.controller;
 
 import com.zipcode.wilmington.zipzapzopblog.model.User;
 import com.zipcode.wilmington.zipzapzopblog.repository.UserRepo;
+import com.zipcode.wilmington.zipzapzopblog.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -15,35 +16,37 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.mock;
 
+@SpringBootTest
+@AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
 public class RegistrationControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
-
     @MockBean
-    private UserRepo repository;
+    private UserService service;
 
     @Test
-    public void testRegistration() throws Exception{
+    public void testRegistrationSucessful() throws Exception{
         // Given
-        HttpStatus expected = HttpStatus.CREATED;
         User expectedUser = new User("cw03@gmail.com", "1235","cw03","Charles","Wilmer");
 
         BDDMockito
-                .given(repository.save(expectedUser))
+                .given(service.save(expectedUser))
                 .willReturn(expectedUser);
 
         BDDMockito
-                .given(repository.findByEmail(expectedUser.getEmail()))
+                .given(service.findByEmail(expectedUser.getEmail()))
                 .willReturn(Optional.empty());
         BDDMockito
-                .given(repository.findByUsername(expectedUser.getUsername()))
+                .given(service.findByUsername(expectedUser.getUsername()))
                 .willReturn(Optional.empty());
 
 
@@ -59,4 +62,102 @@ public class RegistrationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string(expectedContent));
     }
+
+    @Test
+    public void testRegistrationExistingEmail() throws Exception{
+        // Given
+        User expectedUser = new User("cw03@gmail.com", "1235","cw03","Charles","Wilmer");
+        User existingUser = new User("cw03@gmail.com", "1235","cw0123","Charles","Wilmer");
+
+        BDDMockito
+                .given(service.save(expectedUser))
+                .willReturn(expectedUser);
+
+        BDDMockito
+                .given(service.findByEmail(expectedUser.getEmail()))
+                .willReturn(Optional.of(existingUser));
+        BDDMockito
+                .given(service.findByUsername(expectedUser.getUsername()))
+                .willReturn(Optional.empty());
+
+
+        String expectedContent = "";
+
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .post("/registration")
+                .content(expectedContent)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string(expectedContent));
+//                .andExpect(MockMvcResultMatchers.model().hasNoErrors());
+    }
+
+    @Test
+    public void testRegistrationExistingUsername() throws Exception{
+        // Given
+        User expectedUser = new User("cw03@gmail.com", "1235","cw03","Charles","Wilmer");
+        User existingUser = new User("charles03@gmail.com", "1235","cw03","Charles","Wilmer");
+
+        BDDMockito
+                .given(service.save(expectedUser))
+                .willReturn(expectedUser);
+
+        BDDMockito
+                .given(service.findByEmail(expectedUser.getEmail()))
+                .willReturn(Optional.empty());
+        BDDMockito
+                .given(service.findByUsername(expectedUser.getUsername()))
+                .willReturn(Optional.of(existingUser));
+
+
+        String expectedContent = "";
+
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .post("/registration")
+                .content(expectedContent)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string(expectedContent));
+    }
+
+
+    @Test
+    public void testRegistrationBindingResult() throws Exception{
+        // Given
+        User expectedUser = new User("cw03@gmail.com", "1235","cw03","Charles","Wilmer");
+        User existingUser = new User("charles03@gmail.com", "1235","cw03","Charles","Wilmer");
+
+        BDDMockito
+                .given(service.save(expectedUser))
+                .willReturn(expectedUser);
+
+        BDDMockito
+                .given(service.findByEmail(expectedUser.getEmail()))
+                .willReturn(Optional.empty());
+        BDDMockito
+                .given(service.findByUsername(expectedUser.getUsername()))
+                .willReturn(Optional.of(existingUser));
+
+
+        String expectedContent = "";
+
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .post("/registration")
+                .content(expectedContent)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string(expectedContent));
+    }
+
+
+
 }

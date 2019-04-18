@@ -43,8 +43,10 @@ public class RegistrationController {
         if (!bindingResult.hasErrors()) {
             // Registration successful, save user
             service.save(user);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
 }
