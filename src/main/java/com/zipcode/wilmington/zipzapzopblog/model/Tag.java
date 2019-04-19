@@ -28,11 +28,6 @@ public class Tag {
         this.posts = new ArrayList<>();
     }
 
-    public Tag(String keyWord, Long postId ) {
-        this.keyWord = keyWord;
-        this.posts = new ArrayList<>();
-    }
-
     public Long getId() {
         return id;
     }
