@@ -15,9 +15,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.Mockito.verify;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -31,7 +36,19 @@ public class PostControllerTest {
     private PostRepo repo;
 
     @Test
-    public void index() {
+    public void testIndex() throws Exception {
+        List<Post> list = new ArrayList<>();
+        Post post= new Post("New Post",null,null,null);
+        list.add(post);
+        String expectedContent = "[{\"id\":null,\"title\":\"New Post\",\"body\":null,\"createDate\":null,\"user\":null}]";
+        BDDMockito
+                .given(repo.findByOrderByCreateDateDesc())
+                .willReturn(list);
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .get("/posts/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(expectedContent));
     }
 
     @Test
@@ -41,7 +58,7 @@ public class PostControllerTest {
                 .given(repo.findById(givenId))
                 .willReturn(Optional.of(new Post("New Post",null,null,null)));
 
-        String expectedContent = "{\"id\":null,\"name\":\"New Post\",\"body\",\":null\",\"createDate\",\":null\",\"user\":null}";
+        String expectedContent = "{\"id\":null,\"title\":\"New Post\",\"body\":null,\"createDate\":null,\"user\":null}";
         this.mvc.perform(MockMvcRequestBuilders
                 .get("/posts/"+ givenId))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -55,7 +72,7 @@ public class PostControllerTest {
                 .given(repo.save(post))
                 .willReturn(post);
 
-        String expectedContent="{\"id\":null,\"name\":\"New Post\",\"body\",\":null\",\"createDate\",\":null\",\"user\":null}";
+        String expectedContent="{\"id\":null,\"title\":\"New Post\",\"body\":null,\"createDate\":null,\"user\":null}";
         this.mvc.perform(MockMvcRequestBuilders
                 .post("/posts/")
                 .content(expectedContent)
@@ -64,14 +81,43 @@ public class PostControllerTest {
         )
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string(expectedContent));
-
     }
 
     @Test
-    public void update() {
+    public void update() throws Exception {
+            Post post = new Post("New Post",null,null,null);
+            BDDMockito
+                    .given(repo.save(post))
+                    .willReturn(post);
+            String expectedContent="{\"id\":null,\"title\":\"New Post\",\"body\":null,\"createDate\":null,\"user\":null}";
+            this.mvc.perform(MockMvcRequestBuilders
+                    .put("/posts")
+                    .content(expectedContent)
+                    //what type of data I want to get back
+                    .accept(MediaType.APPLICATION_JSON)
+                    //what type of data I'm saving
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+                    //isOK is the httpStatus code
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    //verifying the server content
+                    .andExpect(MockMvcResultMatchers.content().string(expectedContent));
     }
 
+
     @Test
-    public void destroy() {
+    public void testDestroy() throws Exception {
+        Long givenId = 101L;
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .delete("/posts/" + givenId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
+
+        verify(repo).deleteById(givenId);
+
     }
 }

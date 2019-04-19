@@ -22,7 +22,9 @@ public class PostService {
 
     public Optional<Post> show(Long id) { return postRepo.findById(id);}
 
-    public Post create(Post post){ return postRepo.save(post); }
+    public Post create(Post post){
+        return postRepo.save(post);
+    }
 
     public Post update(Post post){
         return postRepo.save(post);
