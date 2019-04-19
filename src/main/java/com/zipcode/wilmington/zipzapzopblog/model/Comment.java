@@ -41,6 +41,25 @@ public class Comment {
 
 
 
+    public Comment (String body, Date creationDate) {
+        this.body = body;
+        this.creationDate = creationDate;
+
+
+    }
+
+
+    public Comment (Long id, String body, Date creationDate, Post post, User user) {
+        this.id=id;
+        this.body = body;
+        this.creationDate = creationDate;
+        this.post=post;
+        this.user=user;
+
+
+    }
+
+
 
     public Long getId() {
         return id;
@@ -80,5 +99,14 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", Body='" + this.body + '\'' +
+                ", CreateDate=" + this.creationDate +
+                '}';
     }
 }
