@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +31,12 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> showUser(@PathVariable Long id) {
+    public ResponseEntity<User> showUser(@PathVariable Long id) throws SQLException {
         Optional<User> optional = service.show(id);
         if (optional.isPresent()) {
             return new ResponseEntity<>(optional.get(), HttpStatus.OK);
         } else{
-            throw new IllegalArgumentException();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
