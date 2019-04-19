@@ -5,6 +5,7 @@ import com.zipcode.wilmington.zipzapzopblog.repository.UserRepo;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() throws SQLException {
         //given
         User userToReturn = new User("m@gmail.com", "23434", "mbrahma","m","b" );
         userToReturn.setId(1L);
@@ -84,7 +85,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() throws SQLException{
         //mock
         Boolean expectedBool = true;
         UserRepo userRepo = mock(UserRepo.class);
