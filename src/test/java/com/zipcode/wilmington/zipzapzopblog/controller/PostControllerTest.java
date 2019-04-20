@@ -38,7 +38,7 @@ public class PostControllerTest {
     @Test
     public void testIndex() throws Exception {
         List<Post> list = new ArrayList<>();
-        Post post= new Post("New Post",null,null,null);
+        Post post= new Post("New Post",null,null);
         list.add(post);
         String expectedContent = "[{\"id\":null,\"title\":\"New Post\",\"body\":null,\"createDate\":null,\"user\":null}]";
         BDDMockito
@@ -56,7 +56,7 @@ public class PostControllerTest {
         Long givenId = 1L;
         BDDMockito
                 .given(repo.findById(givenId))
-                .willReturn(Optional.of(new Post("New Post",null,null,null)));
+                .willReturn(Optional.of(new Post("New Post",null,null)));
 
         String expectedContent = "{\"id\":null,\"title\":\"New Post\",\"body\":null,\"createDate\":null,\"user\":null}";
         this.mvc.perform(MockMvcRequestBuilders
@@ -67,7 +67,7 @@ public class PostControllerTest {
 
     @Test
     public void testcreate() throws Exception {
-        Post post = new Post("New Post",null,null,null);
+        Post post = new Post("New Post",null,null);
         BDDMockito
                 .given(repo.save(post))
                 .willReturn(post);
@@ -85,7 +85,7 @@ public class PostControllerTest {
 
     @Test
     public void update() throws Exception {
-            Post post = new Post("New Post",null,null,null);
+            Post post = new Post("New Post",null,null);
             BDDMockito
                     .given(repo.save(post))
                     .willReturn(post);
