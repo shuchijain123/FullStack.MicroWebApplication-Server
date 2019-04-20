@@ -64,4 +64,25 @@ public class PostTagController {
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
+
+    @DeleteMapping("/posts/{postId}/tags/{tagId}")
+    public ResponseEntity<Boolean> deletePostTag(@PathVariable Long postId, @PathVariable Long tagId) {
+        Optional<Post> post = tagService.findPost(postId);
+
+        Tag tag = tagService.getTag(tagId);
+
+        Collection<Tag> tags = new ArrayList<>();
+
+        if (post.isPresent()) {
+
+            tags.addAll(post.get().getTags());
+            tags.remove(tag);
+            post.get().setTags(tags);
+            postService.update(post.get());
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+
+    }
 }
