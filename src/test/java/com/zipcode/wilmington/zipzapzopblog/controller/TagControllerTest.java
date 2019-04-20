@@ -110,7 +110,7 @@ public class TagControllerTest {
 
         //expected data
         Long expectedId = 3l;
-        Tag tagToReturn = new Tag("TEST TAG");
+        Tag tagToReturn = new Tag("TEST TAG2");
         tagToReturn.setId(expectedId);
 
         // when the method save is called with the tag
