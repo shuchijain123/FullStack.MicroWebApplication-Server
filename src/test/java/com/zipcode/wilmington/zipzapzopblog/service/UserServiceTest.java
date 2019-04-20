@@ -85,7 +85,26 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteTest() throws SQLException{
+    public void deleteTestPostive() throws SQLException{
+        //mock
+        Boolean expectedBool = true;
+        UserRepo userRepo = mock(UserRepo.class);
+        when(userRepo.findById(50L)).thenReturn(Optional.of(new User("mctina@gmail.com","hamburglar","mctina","Tina","SmallTock")));
+
+        // create class to test
+        UserService userService = new UserService(userRepo);
+
+        // method call
+        Boolean actual = userService.delete(50L);
+        // verify
+        verify(userRepo, times(1)).deleteById(50L);
+
+        // boolean is returned
+        Assert.assertEquals(expectedBool,actual);
+    }
+
+    @Test(expected = SQLException.class)
+    public void deleteTestNegative() throws SQLException{
         //mock
         Boolean expectedBool = true;
         UserRepo userRepo = mock(UserRepo.class);
