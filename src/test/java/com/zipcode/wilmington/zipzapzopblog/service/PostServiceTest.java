@@ -18,7 +18,7 @@ public class PostServiceTest {
     @Test
     public void testShow(){
 
-        Post post = new Post("New Post", null, null,null);
+        Post post = new Post("New Post", null, null);
 
         PostRepo mockRepo = mock(PostRepo.class);
         long expectedId = 1;
@@ -36,12 +36,12 @@ public class PostServiceTest {
     @Test
     public void testCreate(){
         //Given
-        Post post = new Post("New Post", null, null,null);
+        Post post = new Post("New Post", null, null);
 
         PostRepo mockRepo = mock(PostRepo.class);
 
         String expectedPostTitle = "Post post post";
-        Post postToReturn = new Post("Post",null,null,null);
+        Post postToReturn = new Post("Post",null,null);
         postToReturn.setTitle(expectedPostTitle);
 
         when(mockRepo.save(post)).thenReturn(postToReturn);
@@ -59,7 +59,7 @@ public class PostServiceTest {
     @Test
     public void testUpdate(){
 
-        Post post = new Post("New Post",null,null,null);
+        Post post = new Post("New Post",null,null);
 
         PostRepo mockRepo = mock(PostRepo.class);
 
@@ -72,7 +72,7 @@ public class PostServiceTest {
 
     @Test
     public void testDelete(){
-        Post post = new Post("New Post", null,null,null);
+        Post post = new Post("New Post", null,null);
         PostRepo mockRepo = mock(PostRepo.class);
         long expectedId = 1;
 
@@ -100,7 +100,7 @@ public class PostServiceTest {
 
     @Test
     public void testFindAllOrderByDate(){
-        Post post = new Post("Post",null,null,null);
+        Post post = new Post("Post",null,null);
         List<Post> list= new ArrayList<>();
         list.add(post);
 

@@ -32,11 +32,8 @@ public class Post {
     private Date createDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
     private User user;
-
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "post_tag",
@@ -48,11 +45,11 @@ public class Post {
 
     }
 
-    public Post(String title, String body, Date createDate, User user){
+    public Post(String title, String body, Date createDate) {
         this.title = title;
         this.body = body;
-        this.createDate = createDate;
-        this.user = user;
+        this.createDate=createDate;
+
     }
 
     public Long getId() {
@@ -98,6 +95,7 @@ public class Post {
     public void setTags(Collection<Tag> tags) {
         this.tags = tags;
     }
+
     @JsonIgnore
     public Collection<Tag> getTags() {
         return tags;
