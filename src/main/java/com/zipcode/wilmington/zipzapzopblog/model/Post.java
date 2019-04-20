@@ -7,10 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "post")
@@ -35,7 +32,7 @@ public class Post {
     private Date createDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -43,6 +40,17 @@ public class Post {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Collection<Tag> tags = new ArrayList<>();
+
+    public Post(){
+
+    }
+
+    public Post(String title, String body, Date createDate) {
+        this.title = title;
+        this.body = body;
+        this.createDate=createDate;
+
+    }
 
     public Long getId() {
         return id;
@@ -115,4 +123,21 @@ public class Post {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return Objects.equals(id, post.id) &&
+                Objects.equals(title, post.title) &&
+                Objects.equals(body, post.body) &&
+                Objects.equals(createDate, post.createDate) &&
+                Objects.equals(user, post.user) &&
+                Objects.equals(tags, post.tags);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, body, createDate, user, tags);
+    }
 }
