@@ -48,11 +48,10 @@ public class Post {
 
     }
 
-    public Post(String title, String body, Date createDate, User user){
+    public Post(String title, String body, Date createDate){
         this.title = title;
         this.body = body;
         this.createDate = createDate;
-        this.user = user;
     }
 
     public Long getId() {
