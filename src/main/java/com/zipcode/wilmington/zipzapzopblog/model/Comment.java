@@ -61,6 +61,16 @@ public class Comment {
 
 
 
+    public Comment (String body, Date creationDate, Post post) {
+        this.id=id;
+        this.body = body;
+        this.creationDate = creationDate;
+        this.post=post;
+
+    }
+
+
+
     public Long getId() {
         return id;
     }
