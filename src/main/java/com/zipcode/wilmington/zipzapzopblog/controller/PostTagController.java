@@ -40,6 +40,7 @@ public class PostTagController {
     public ResponseEntity<Collection<Post>> getAllPostsByTag(@PathVariable Long tagId){
         Tag tag = tagService.getTag(tagId);
         Collection<Post> posts = tag.getPosts();
+        System.out.println("We in this B");
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
@@ -48,13 +49,12 @@ public class PostTagController {
     public ResponseEntity<Boolean> updatePostTag(@PathVariable Long postId, @PathVariable Long tagId) {
 
         Optional<Post> post = tagService.findPost(postId);
-
+        System.out.println("Are we in this b?");
         Tag tag = tagService.getTag(tagId);
 
         Collection<Tag> tags = new ArrayList<>();
 
-        if (post.isPresent()) {
-
+        if (post.isPresent() && !post.get().getTags().contains(tag)) {
             tags.add(tag);
             tags.addAll(post.get().getTags());
             post.get().setTags(tags);
