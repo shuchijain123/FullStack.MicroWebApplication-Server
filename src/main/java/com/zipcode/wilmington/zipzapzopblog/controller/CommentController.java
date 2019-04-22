@@ -55,18 +55,11 @@ public class CommentController {
 
 
         if (post.isPresent()) {
-            Optional<User> user = Optional.ofNullable(post.get().getUser());
-
-
-
-            if (user.isPresent()) {
 
                 comment.setPost(post.get());
-                comment.setUser(user.get());
-
 
             }
-        }
+
         return new ResponseEntity<>(commentService.createComment(comment), HttpStatus.CREATED);
 
     }
@@ -89,7 +82,7 @@ public class CommentController {
 
 
 
-    @GetMapping("/commentsByPostId/{id}")
+    @GetMapping("commentsByPostId//{id}")
     public ResponseEntity<List<Comment>> getAllCommentsByPost(@PathVariable Long id) {
 
         return new ResponseEntity<List<Comment>>(commentService.findCommentbyPostId(id), HttpStatus.OK);
