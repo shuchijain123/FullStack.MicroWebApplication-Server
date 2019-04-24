@@ -41,7 +41,16 @@ INSERT INTO POST (post_id, title, body, create_date, user_id)
 VALUES (8,'7 Personal Growth Hacks to Survive a Coding Bootcamp', '1. Tenacity - Because it is a short program, expect it to be dense and intense. 2. Goal-oriented focus - set aggressive goals to motivate yourself. 3.Attentiveness - Genuinely be interested in learning. Don’t just go through the modules with the goal of just finishing it. 4. Meditation and mindfulness - A clear mind can give you clear thoughts and meditation will help keep anyone focused. 5. Learn to take breaks - Stuck on a problem? Your brain gets fatigued after a while, and maybe that’s the reason why you can’t get anything done right. 6. Don’t let stress bottle up; be honest about anxiety - If you let pressure build up inside, you will become more and more anxious and miss out on finding the fun and interest in actually learning. 7. Coding bootcamps are designed for optimum learning, but don’t feel bad if you don’t learn everything, because chances are, you might never truly will.  ', current_timestamp,3);
 
 INSERT INTO POST (post_id, title, body, create_date, user_id)
-VALUES (9,'Marks Word of the Day : Cabotinage' , 'cabotinage. : behavior befitting a second-rate actor : obvious playing to the audience : theatricality. ', current_timestamp,2);
+VALUES (9,'Mark''s Word of the Day : Cabotinage' , 'Cabotinage. : Behavior befitting a second-rate actor : obvious playing to the audience : Theatricality. ', current_timestamp,2);
+
+INSERT INTO POST (post_id, title, body, create_date, user_id)
+VALUES (10, 'Wisdom on Life','The meaning of life is what you make of it. ',{ts '2016-10-19 11:10:13.247'},null);
+
+INSERT INTO POST (post_id, title, body, create_date, user_id)
+VALUES (11, 'Fairbank''s Formulations : Sulfur Dioxide','{ S + O2 -> SO2 }. Don''t do this! ',current_timestamp ,null);
+
+INSERT INTO POST (post_id, title, body, create_date, user_id)
+VALUES (12, 'Fairbank''s Formulations : REDLICH-KWONG Equation of State','{ p=(RT)/(Vm-b) - (a/(sqrt(T)*Vm(Vm+b)) }. an empirical, algebraic equation that relates temperature, pressure, and volume of gases.',current_timestamp ,null);
 
 -- Insert comments
 INSERT INTO COMMENT (comment_id, body, create_date, post_id, user_id)
@@ -56,15 +65,28 @@ VALUES (3, 'So sad about humpty dumpty', CURRENT_TIMESTAMP, 3, 1);
 INSERT INTO COMMENT (comment_id, body, create_date, post_id, user_id)
 VALUES (4, 'So cute!', CURRENT_TIMESTAMP, 2, 3);
 
+INSERT INTO COMMENT (comment_id, body, create_date, post_id, user_id)
+VALUES (5, 'Very true!', {ts '2016-10-19 11:10:13.247'}, 10, 3);
+
+
 -- Insert Tags
 INSERT INTO TAG (tag_id, key_word)
 VALUES (1, 'Nursery Rhymes');
 
 INSERT INTO TAG (tag_id, key_word)
-VALUES (2, 'Advice');
+VALUES (2, 'Tips');
 
 INSERT INTO TAG (tag_id, key_word)
 VALUES (3, 'Coding Advice');
+
+INSERT INTO TAG (tag_id, key_word)
+VALUES (4, 'Mark''s Word');
+
+INSERT INTO TAG (tag_id, key_word)
+VALUES (5, 'Formulations');
+
+INSERT INTO TAG (tag_id, key_word)
+VALUES (6, 'Will''s Wisdom');
 
 -- Insert into PostTags
 
@@ -91,5 +113,17 @@ VALUES (7,2);
 
 INSERT INTO POST_TAG (post_id, tag_id)
 VALUES (7,3);
+
+INSERT INTO POST_TAG (post_id, tag_id)
+VALUES (9,4);
+
+INSERT INTO POST_TAG (post_id, tag_id)
+VALUES (10,6);
+
+INSERT INTO POST_TAG (post_id, tag_id)
+VALUES (11,5);
+
+INSERT INTO POST_TAG (post_id, tag_id)
+VALUES (12,5);
 
 
