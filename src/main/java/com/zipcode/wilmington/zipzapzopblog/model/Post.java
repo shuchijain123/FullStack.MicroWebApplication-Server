@@ -32,11 +32,7 @@ public class Post {
     private Date createDate;
 
     @ManyToOne
-<<<<<<< HEAD
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-=======
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
->>>>>>> d30ccf13c28ff1e7ca6aba95eeda76096fb8874e
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
