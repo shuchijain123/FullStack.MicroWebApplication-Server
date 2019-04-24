@@ -40,6 +40,7 @@ public class PostTagController {
     public ResponseEntity<Collection<Post>> getAllPostsByTag(@PathVariable Long tagId){
         Tag tag = tagService.getTag(tagId);
         Collection<Post> posts = tag.getPosts();
+
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
@@ -53,8 +54,7 @@ public class PostTagController {
 
         Collection<Tag> tags = new ArrayList<>();
 
-        if (post.isPresent()) {
-
+        if (post.isPresent() && !post.get().getTags().contains(tag)) {
             tags.add(tag);
             tags.addAll(post.get().getTags());
             post.get().setTags(tags);
@@ -63,5 +63,26 @@ public class PostTagController {
         }
 
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/posts/{postId}/tags/{tagId}")
+    public ResponseEntity<Boolean> deletePostTag(@PathVariable Long postId, @PathVariable Long tagId) {
+        Optional<Post> post = tagService.findPost(postId);
+
+        Tag tag = tagService.getTag(tagId);
+
+        Collection<Tag> tags = new ArrayList<>();
+
+        if (post.isPresent()) {
+
+            tags.addAll(post.get().getTags());
+            tags.remove(tag);
+            post.get().setTags(tags);
+            postService.update(post.get());
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+
     }
 }
