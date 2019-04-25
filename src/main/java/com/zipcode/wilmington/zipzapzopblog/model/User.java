@@ -3,7 +3,7 @@ package com.zipcode.wilmington.zipzapzopblog.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "profile")
 public class User {
 
     @Column(name = "user_id")

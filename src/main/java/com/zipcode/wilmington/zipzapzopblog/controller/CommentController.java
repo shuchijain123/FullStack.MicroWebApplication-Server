@@ -103,9 +103,22 @@ public class CommentController {
 
 
     @DeleteMapping("/deletecomment/{id}")
+
     public ResponseEntity<Boolean> deleteComment(@PathVariable Long id) {
-        return new ResponseEntity<>(commentService.delete(id), HttpStatus.OK);
+        ResponseEntity<Boolean> ans = null;
+        try {
+
+           ans= new ResponseEntity<>(commentService.delete(id), HttpStatus.OK);
+        }
+
+        catch(Exception e) {
+
+            System.out.println( "No element found");
+        };
+        return ans;
     }
+
+
 
 
     @PutMapping("/comment/{id}")
