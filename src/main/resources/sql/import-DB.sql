@@ -2,13 +2,13 @@ ALTER TABLE post MODIFY body TEXT null;
 
 -- Insert Users
 
-INSERT INTO USER (user_id, password, email, username, first_name, last_name)
+INSERT INTO PROFILE (user_id, password, email, username, first_name, last_name)
 VALUES (1, '12345', 'user@mail.com', 'mbrahma', 'Marci', 'Brahma');
 
-INSERT INTO USER (user_id, password, email, username, first_name, last_name)
+INSERT INTO PROFILE (user_id, password, email, username, first_name, last_name)
 VALUES (2, '12345', 'johndoe@gmail.com', 'johndoe', 'John', 'Doe');
 
-INSERT INTO USER (user_id, password, email, username, first_name, last_name)
+INSERT INTO PROFILE (user_id, password, email, username, first_name, last_name)
 VALUES (3, '12345', 'ana@mail.com', 'ana', 'Ana', 'Surname');
 
 -- Insert Posts
